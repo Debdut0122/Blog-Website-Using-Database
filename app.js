@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const Blog = require("./models/blog");
+const blogRoute = require('./routes/blogRoute')
 const app = express();
 
 const dbURI =
@@ -61,57 +61,13 @@ app.get("/", (req, res) => {
   res.redirect("/blogs");
   //  whatever object you pass, you can access that object from the page that you are rendering
 });
-app.get("/blogs", (req, res) => {
-  Blog.find()
-    .sort({ createdAt: -1 })
-    .then((result) => {
-      res.render("index", { title: "All blogs", blogs: result });
-    })
-    .catch((err) => console.log(err));
-  // Blog.finfById("ID"), will give you a unique blog with given id
-});
 
 app.get("/about", (req, res) => {
   // res.sendFile("./views/about.html", { root: __dirname });
   res.render("about", { title: "About" });
 });
 
-app.post("/blogs", (req, res) => {
-  const blog = new Blog(req.body);
-  blog
-    .save()
-    .then((result) => {
-      res.redirect("/blogs");
-    })
-    .catch((err) => console.log(err));
-});
-
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create" });
-});
-
-app.get("/blogs/:id", (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-  Blog.findById(id)
-    .then((result) => {
-      console.log(result);
-      res.render("details", { title: "Details page", blogs: result });
-    })
-    .catch((err) => console.log(err));
-});
-// app.get("/about-us", (req, res) => {
-//   res.redirect("/about");
-// });
-app.delete("/blogs/:id", (req, res) => {
-  const id = req.params.id;
-  console.log(id);
-  Blog.findByIdAndDelete(id)
-    .then((result) => {
-      res.json({ redirect: "/blogs" });
-    })
-    .catch((err) => console.log(err));
-});
+app.use("/blogs",blogRoute);
 app.use((req, res) => {
   res.status(404).render("404", { title: "404" });
   // if none of the paths matches, this will execute
