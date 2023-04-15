@@ -1,5 +1,5 @@
 # Blog Website using MERN stack
-This a basic project done to learn and practice MERN stack and integration of MongoDB databse using Node.
+This a basic project done to learn and practice MongoDB, Node.js and Express.js stacks.
 ## Steps to run the code
 Ensure that you have node.js in your local setup.
 Open a terminal and run the following:
