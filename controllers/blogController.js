@@ -6,7 +6,6 @@ const getHome = (req, res) => {
       res.render("../views/blogs/index", { title: "All blogs", blogs: result });
     })
     .catch((err) => console.log(err));
-  // Blog.finfById("ID"), will give you a unique blog with given id
 };
 
 const postHome = (req, res) => {
